@@ -19,3 +19,7 @@ my_cred <- git2r::cred_ssh_key(
   passphrase = "juliajoel")
 
 use_git_credentials(my_cred)
+
+edit_r_environ()
+Sys.getenv("GITHUB_PAT")
+github_token()
