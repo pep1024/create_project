@@ -8,8 +8,9 @@ create_project(path = "C:/Users/josep.PORTATIL-ISABEL/Documents/R/shiny_game", o
 use_git()
 
 # 3. create a remote repo in github
-use_github(protocol = "ssh")
+use_github(protocol = "ssh", credentials = my_cred)
 
+browse_github_token()
 git_credentials()
 
 my_cred <- git2r::cred_ssh_key(
