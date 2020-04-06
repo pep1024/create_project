@@ -23,3 +23,6 @@ use_git_credentials(my_cred)
 edit_r_environ()
 Sys.getenv("GITHUB_PAT")
 github_token()
+
+
+use_github()
