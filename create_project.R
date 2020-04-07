@@ -26,3 +26,5 @@ github_token()
 
 
 use_github()
+
+use_git_config()
