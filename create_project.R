@@ -13,11 +13,6 @@ use_github(protocol = "ssh", credentials = my_cred)
 browse_github_token()
 git_credentials()
 
-my_cred <- git2r::cred_ssh_key(
-  publickey = "/Users/josep.PORTATIL-ISABEL/Documents/.ssh/public_git_pep",
-  privatekey = "/Users/josep.PORTATIL-ISABEL/Documents/.ssh/private_git_pep.ppk", 
-  passphrase = "juliajoel")
-
 use_git_credentials(my_cred)
 
 edit_r_environ()
