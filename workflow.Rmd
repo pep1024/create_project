@@ -1,0 +1,137 @@
+---
+title: "Analysis workflow"
+author: "Pep Porrà"
+date: "May 9, 2020"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Goal
+
+To investigate tools to implement a DS analysis workflow that makes as easy as possible to start an analysis in `R` that:
+
+1. It is sharable
+1. It is reproducible
+1. It is extensible
+
+## Tools and Packages
+
+### `installr` package
+
+It makes it easier to upgrade `R` and other packages, for instance RTools [link](https://cran.r-project.org/web/packages/installr/index.html)
+
+```{r}
+library(installr)
+```
+
+### `RTools`
+
+`RTools` package is required to build packages that work in Windows [link](https://cran.r-project.org/bin/windows/Rtools/history.html). A new version exist for `R` 4.0.0 [link](https://cran.r-project.org/bin/windows/Rtools/)
+
+We first check if `RTools` is installed using the `find_rtools` function in `devtools` package
+
+
+```{r}
+library(devtools)
+```
+
+```{r}
+find_rtools()
+```
+```{r}
+warning_1 <- 'WARNING: Rtools is required to build R packages, but is not currently installed.
+Please download and install Rtools custom from http://cran.r-project.org/bin/windows/Rtools/.'
+```
+
+fucntion `install_Rtools(check = TRUE)` does not work. I downloaded version 3.5 directly from [RTools](https://cran.r-project.org/bin/windows/Rtools/history.html). Download the version required and execute it. I have chosen to add it to path and not to add it to registry.
+
+
+### R version info
+
+We can obatin info about the session we are in with the function in the package `utils`
+
+```{r}
+R.version
+```
+
+### R session info
+
+Using the package `utils`,
+
+
+```{r}
+sessionInfo()
+```
+
+Using devtools package
+
+```{r}
+session_info()
+```
+
+### A proposed workflow
+
+The package `usethis` <https://usethis.r-lib.org/index.html> simplifies the setup of a project by:
+
+* Creating a folder for the analysis
+* Creating an RStudio project in the new folder
+* Initializing a local git repo in that folder
+* Opening a new RStudio session for the new project (so, working directory is in the new folder)
+
+These workflows are well explained in [Happy Git and GitHub for the useR](https://happygitwithr.com/)
+
+#### GitHub first (SSH)
+
+1. Create a Github new repo.
+1. Clone it as ssh. It searches for the key at: %HOME%/.ssh and must have name: id_rsa
+1. Copy the ssh string in the clone with ssh
+1. In RStudio, Create New project as git repo.
+1. Copy the test in the git URL, chose the folder
+1. You can commit any chnage to your local repo and push it later to remote.
+1. Every time we push, it will ask for the passphrase.
+1. To avoid it, we can run pageant and add the key we are using (It does not work)
+
+#### GitHub first (HTTPS)
+
+1. Create a Github new repo.
+1. Clone it as https. 
+1. Copy the https string in the clone with https
+1. In RStudio, Create New project as git repo.
+1. Copy the test in the git URL, chose the folder
+1. You can commit any change to your local repo and push it later to remote.
+1. The PAT (github token must passed to .Renviron, see how to check it below)
+
+#### Using `usethis`
+
+Three steps
+
+*1* Create the new Rstudio project and folder. A new session of Rstusio will be open
+
+```{r, eval = FALSE}
+# 1. create folder and create a new Rproj there.
+create_project(path = "C:/Users/josep.PORTATIL-ISABEL/Documents/R/...", open = TRUE, rstudio = TRUE)
+```
+
+*2* Create a local git repository. Rstudio will be rebooted to add the Git tab in Rstudio 
+
+```{r, eval = FALSE}
+# 2. Init a local git repo in that directory
+use_git()
+```
+
+*3* Finally, create the GitHub repo. We can choose if connect via HTTPS (recommended) or ssh. Github repo will open. We can modifiy repo description
+
+```{r, eval = FALSE}
+#3. create a remote repo in github 
+use_github()
+```
+
+We can checnk all the project setup with 
+
+```{r}
+usethis::git_sitrep()
+```
+
